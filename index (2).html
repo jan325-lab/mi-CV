@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Janis Navarro | Ing. Fuentes de Energía Renovable</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <style>
+    /* =============================================
+       VARIABLES DE COLOR Y TEMA
+    ============================================= */
+    :root {
+      --olivo:       #6B7A3C;
+      --olivo-claro: #8B9E52;
+      --olivo-dark:  #4A5429;
+      --guinda:      #7B1D3A;
+      --guinda-claro:#A02850;
+      --guinda-dark: #541228;
+      --crema:       #F5F0E8;
+      --crema-dark:  #E8E0D0;
+      --carbon:      #1A1A1A;
+      --carbon2:     #252520;
+      --texto:       #2C2C28;
+      --mono:        'Space Mono', monospace;
+      --sans:        'Syne', sans-serif;
+    }
+
+    /* =============================================
+       RESET Y BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--carbon);
+      color: var(--crema);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+
+    /* =============================================
+       GRAIN OVERLAY (textura de fondo)
+    ============================================= */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* =============================================
+       BARRA DE NAVEGACIÓN
+    ============================================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(26,26,26,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(107,122,60,0.3);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--olivo-claro);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--crema-dark);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--guinda-claro); }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Panel izquierdo: texto */
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem 5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--olivo-claro);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 2px;
+      background: var(--olivo-claro);
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-name span {
+      color: var(--guinda-claro);
+      display: block;
+    }
+
+    .hero-degree {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--crema-dark);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 1.2rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.7;
+    }
+
+    .hero-summary {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(245,240,232,0.8);
+      max-width: 460px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.8rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--guinda);
+      color: var(--crema);
+    }
+    .btn-primary:hover { background: var(--guinda-claro); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--olivo-claro);
+      border: 1px solid var(--olivo-claro);
+    }
+    .btn-outline:hover {
+      background: var(--olivo-claro);
+      color: var(--carbon);
+    }
+
+    /* Panel derecho: foto */
+    .hero-photo-panel {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Decoración geométrica */
+    .hero-photo-panel::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      right: 10%;
+      width: 300px;
+      height: 300px;
+      border: 1px solid rgba(123,29,58,0.3);
+      border-radius: 50%;
+    }
+
+    .hero-photo-panel::after {
+      content: '';
+      position: absolute;
+      bottom: 20%;
+      left: 5%;
+      width: 180px;
+      height: 180px;
+      background: rgba(107,122,60,0.08);
+      clip-path: polygon(50% 0%,100% 100%,0% 100%);
+    }
+
+    /* =============================================
+       *** FOTO DE PERFIL — CAMBIA SOLO ESTA URL ***
+    ============================================= */
+    .profile-photo-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 340px;
+      height: 420px;
+      margin-bottom: 4rem;
+    }
+
+    .profile-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      /* Filtro sutil para integrar con la paleta */
+      filter: grayscale(15%) contrast(1.05);
+    }
+
+    /* Marco decorativo */
+    .profile-photo-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border: 2px solid var(--guinda);
+      z-index: -1;
+      transform: translate(12px, 12px);
+    }
+
+    .profile-photo-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 1px solid var(--olivo);
+      z-index: -1;
+      transform: translate(-8px, -8px);
+    }
+
+    /* Línea vertical decorativa entre columnas */
+    .hero-divider {
+      position: absolute;
+      top: 15%;
+      bottom: 15%;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--olivo-dark) 30%, var(--guinda-dark) 70%, transparent);
+      z-index: 1;
+    }
+
+    /* =============================================
+       SECTION BASE
+    ============================================= */
+    section {
+      padding: 6rem 5rem;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--guinda-claro);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+    }
+
+    /* =============================================
+       SOBRE MÍ
+    ============================================= */
+    #sobre-mi {
+      background: var(--carbon2);
+      border-top: 1px solid rgba(107,122,60,0.15);
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .sobre-text p {
+      line-height: 1.85;
+      color: rgba(245,240,232,0.8);
+      margin-bottom: 1rem;
+      font-size: 0.97rem;
+    }
+
+    .sobre-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem;
+      border: 1px solid rgba(107,122,60,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--olivo), var(--guinda));
+    }
+
+    .stat-number {
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--olivo-claro);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-desc {
+      font-size: 0.78rem;
+      color: rgba(245,240,232,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* =============================================
+       INTERESES / ESPECIALIZACIÓN
+    ============================================= */
+    #intereses {
+      background: var(--carbon);
+    }
+
+    .intereses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .interes-card {
+      padding: 2rem 1.5rem;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(107,122,60,0.15);
+      transition: border-color 0.25s, transform 0.25s;
+      cursor: default;
+    }
+
+    .interes-card:hover {
+      border-color: var(--guinda);
+      transform: translateY(-4px);
+    }
+
+    .interes-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .interes-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+      color: var(--olivo-claro);
+    }
+
+    .interes-text {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.65);
+    }
+
+    /* =============================================
+       EXPERIENCIA
+    ============================================= */
+    #experiencia {
+      background: var(--carbon2);
+      border-top: 1px solid rgba(123,29,58,0.15);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--olivo-dark), var(--guinda-dark));
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 0 0 2.5rem 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 0.5rem;
+      width: 10px;
+      height: 10px;
+      background: var(--guinda);
+      border: 2px solid var(--carbon2);
+      border-radius: 50%;
+    }
+
+    .timeline-tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--olivo-claro);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-role {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-place {
+      font-size: 0.85rem;
+      color: rgba(245,240,232,0.5);
+      margin-bottom: 0.6rem;
+      font-style: italic;
+    }
+
+    .timeline-desc {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(245,240,232,0.7);
+    }
+
+    /* =============================================
+       FORMACIÓN
+    ============================================= */
+    #formacion {
+      background: var(--carbon);
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .edu-card {
+      padding: 2rem;
+      border: 1px solid rgba(107,122,60,0.2);
+      position: relative;
+    }
+
+    .edu-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 60px; height: 60px;
+      border-right: 2px solid var(--guinda-dark);
+      border-bottom: 2px solid var(--guinda-dark);
+    }
+
+    .edu-year {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--guinda-claro);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .edu-institution {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-area {
+      font-size: 0.85rem;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.6;
+    }
+
+    /* =============================================
+       CONTACTO
+    ============================================= */
+    #contacto {
+      background: var(--guinda-dark);
+      border-top: 1px solid rgba(123,29,58,0.5);
+      text-align: center;
+    }
+
+    #contacto .section-title { color: var(--crema); }
+
+    .contacto-sub {
+      font-size: 0.95rem;
+      color: rgba(245,240,232,0.7);
+      margin-bottom: 3rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.75;
+    }
+
+    .contacto-email {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 1rem;
+      color: var(--olivo-claro);
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      border: 1px solid var(--olivo-claro);
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+      margin-bottom: 3rem;
+    }
+
+    .contacto-email:hover {
+      background: var(--olivo-claro);
+      color: var(--carbon);
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--carbon);
+      padding: 1.5rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(107,122,60,0.15);
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: rgba(245,240,232,0.35);
+      letter-spacing: 0.08em;
+    }
+
+    /* =============================================
+       ANIMACIONES DE ENTRADA
+    ============================================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag    { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
+    .hero-name   { animation: fadeUp 0.6s ease both; animation-delay: 0.25s; }
+    .hero-degree { animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
+    .hero-summary{ animation: fadeUp 0.6s ease both; animation-delay: 0.45s; }
+    .hero-cta    { animation: fadeUp 0.6s ease both; animation-delay: 0.55s; }
+    .profile-photo-wrapper { animation: fadeUp 0.8s ease both; animation-delay: 0.3s; }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-text { padding: 7rem 2rem 2rem; }
+      .hero-photo-panel {
+        justify-content: center;
+        padding: 2rem 0 4rem;
+      }
+      .hero-divider { display: none; }
+      .profile-photo-wrapper { width: 260px; height: 320px; margin-bottom: 0; }
+
+      section { padding: 4rem 2rem; }
+      .sobre-grid, .edu-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .intereses-grid { grid-template-columns: 1fr; }
+      footer { padding: 1.5rem 2rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav>
+    <span class="nav-logo">JCN // Ing. Renovable</span>
+    <ul class="nav-links">
+      <li><a href="#sobre-mi">Perfil</a></li>
+      <li><a href="#intereses">Especialización</a></li>
+      <li><a href="#experiencia">Experiencia</a></li>
+      <li><a href="#formacion">Formación</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="inicio">
+
+    <div class="hero-divider"></div>
+
+    <div class="hero-text">
+      <p class="hero-tag">Ingeniería · Energía · Sostenibilidad</p>
+      <h1 class="hero-name">
+        Janis Carolina<br>
+        <span>Navarro Careaga</span>
+      </h1>
+      <p class="hero-degree">Ing. Fuentes de Energía Renovable · UABCS</p>
+      <p class="hero-summary">
+        Estudiante de ingeniería enfocada en biocombustibles, microbiología
+        aplicada y procesos de conversión de biomasa. Auxiliar de investigación
+        activa en la UABCS, con interés especial en biogás y biodiésel como
+        vectores de la transición energética.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contacto">Contacto</a>
+        <a class="btn btn-outline" href="#experiencia">Ver experiencia</a>
+      </div>
+    </div>
+
+    <div class="hero-photo-panel">
+      <!-- ============================================================
+           FOTO DE PERFIL
+           Reemplaza la siguiente URL con la URL de tu foto.
+           Ejemplo: src="https://tu-usuario.github.io/foto.jpg"
+      ============================================================ -->
+      <div class="profile-photo-wrapper">
+        <img
+          class="profile-photo"
+          src="https://placehold.co/340x420/4A5429/F5F0E8?text=Tu+Foto"
+          alt="Foto de Janis Carolina Navarro Careaga"
+        />
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========== SOBRE MÍ ========== -->
+  <section id="sobre-mi">
+    <p class="section-label">// 01 — Perfil</p>
+    <h2 class="section-title">Sobre mí</h2>
+    <div class="sobre-grid">
+      <div class="sobre-text">
+        <p>
+          Soy Janis Navarro, estudiante de segundo semestre de Ingeniería en
+          Fuentes de Energía Renovable en la Universidad Autónoma de Baja
+          California Sur. Me apasiona la intersección entre los procesos
+          biológicos naturales y la generación de energía limpia.
+        </p>
+        <p>
+          Mi enfoque central son los biocombustibles — especialmente el biogás
+          y el biodiésel — y el estudio de los microorganismos que participan
+          en estos procesos. Actualmente colaboro como auxiliar de investigación
+          en el departamento de Ingeniería en Pesquerías de la UABCS bajo la
+          supervisión de la Dra. Deneb Peredo Mancilla.
+        </p>
+        <p>
+          Combino formación técnica rigurosa con experiencia práctica en
+          entornos laborales diversos, lo que me permite abordar problemas
+          complejos con perspectiva interdisciplinaria.
+        </p>
+      </div>
+      <div class="sobre-stats">
+        <div class="stat-card">
+          <div class="stat-number">2°</div>
+          <div class="stat-desc">Semestre en curso</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-desc">Experiencias laborales</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">IER</div>
+          <div class="stat-desc">Ingeniería Renovable</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">BCS</div>
+          <div class="stat-desc">Baja California Sur</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== INTERESES / ESPECIALIZACIÓN ========== -->
+  <section id="intereses">
+    <p class="section-label">// 02 — Especialización</p>
+    <h2 class="section-title">Áreas de interés</h2>
+    <div class="intereses-grid">
+      <div class="interes-card">
+        <span class="interes-icon">⚗️</span>
+        <h3 class="interes-title">Biocombustibles</h3>
+        <p class="interes-text">
+          Investigación y análisis de procesos de producción de biogás y
+          biodiésel como alternativas sostenibles a los combustibles fósiles.
+        </p>
+      </div>
+      <div class="interes-card">
+        <span class="interes-icon">🦠</span>
+        <h3 class="interes-title">Microbiología aplicada</h3>
+        <p class="interes-text">
+          Estudio de microorganismos clave en procesos de digestión anaerobia y
+          transesterificación para la producción de energía limpia.
+        </p>
+      </div>
+      <div class="interes-card">
+        <span class="interes-icon">🌿</span>
+        <h3 class="interes-title">Procesos naturales</h3>
+        <p class="interes-text">
+          Aprovechamiento de ciclos biológicos y residuos orgánicos para
+          optimizar la eficiencia energética en sistemas renovables.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCIA ========== -->
+  <section id="experiencia">
+    <p class="section-label">// 03 — Trayectoria</p>
+    <h2 class="section-title">Experiencia</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <p class="timeline-tag">Actual · UABCS</p>
+        <h3 class="timeline-role">Auxiliar de Investigación</h3>
+        <p class="timeline-place">Departamento de Ingeniería en Pesquerías — Dra. Deneb Peredo Mancilla</p>
+        <p class="timeline-desc">
+          Apoyo activo en proyectos de investigación científica dentro del
+          departamento de Ing. en Pesquerías. Colaboración en recopilación,
+          análisis de datos y desarrollo experimental.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-tag">Experiencia previa</p>
+        <h3 class="timeline-role">Empleada en Strudel Café</h3>
+        <p class="timeline-place">Cafetería Strudel Café — La Paz, BCS</p>
+        <p class="timeline-desc">
+          Atención al cliente, gestión de pedidos y operación en entorno de
+          servicio de alta demanda. Desarrollo de habilidades de comunicación
+          y trabajo en equipo.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <p class="timeline-tag">Experiencia previa</p>
+        <h3 class="timeline-role">Colaboradora</h3>
+        <p class="timeline-place">Ingeniería de las Californias</p>
+        <p class="timeline-desc">
+          Participación en entorno de empresa de ingeniería, adquiriendo
+          perspectiva sobre la aplicación profesional de principios técnicos
+          en proyectos reales.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== FORMACIÓN ========== -->
+  <section id="formacion">
+    <p class="section-label">// 04 — Educación</p>
+    <h2 class="section-title">Formación académica</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <p class="edu-year">2024 — Actualidad</p>
+        <h3 class="edu-institution">UABCS</h3>
+        <p class="edu-area">
+          Ingeniería en Fuentes de Energía Renovable<br>
+          Universidad Autónoma de Baja California Sur
+        </p>
+      </div>
+      <div class="edu-card">
+        <p class="edu-year">Bachillerato</p>
+        <h3 class="edu-institution">COBACH 11</h3>
+        <p class="edu-area">
+          Cursos propedéuticos: Contabilidad y Ciencias Naturales<br>
+          Colegio de Bachilleres de Baja California Sur
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACTO ========== -->
+  <section id="contacto">
+    <p class="section-label">// 05 — Contacto</p>
+    <h2 class="section-title">¿Hablamos?</h2>
+    <p class="contacto-sub">
+      Estoy abierta a colaboraciones académicas, proyectos de investigación
+      y oportunidades en el área de energía renovable y biocombustibles.
+    </p>
+    <a class="contacto-email" href="mailto:jan3_25@alu.uabcs.mx">
+      jan3_25@alu.uabcs.mx
+    </a>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <p>© 2025 Janis Carolina Navarro Careaga</p>
+    <p>Ing. Fuentes de Energía Renovable · UABCS · La Paz, BCS</p>
+  </footer>
+
+</body>
+</html>
